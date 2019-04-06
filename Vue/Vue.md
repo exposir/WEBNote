@@ -1,10 +1,11 @@
 ### v-bind和v-model的区别
 
-1.v-bind用来绑定数据和属性以及表达式，缩写为'：'
-2.v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。根据控件类型选择正确的方法更新元素，可以绑定text、radio、checkbox、selected
+- v-bind用来绑定数据和属性以及表达式，缩写为'：'
+- v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。根据控件类型选择正确的方法更新元素，可以绑定text、radio、checkbox、selected
 
-###### v-bind
+##### v-bind
 1.绑定文本
+
 直接用v-bind或者{{}}
 
 ### 什么是 mvvm？
