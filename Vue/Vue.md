@@ -49,7 +49,7 @@ MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层
 ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作 DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。
 
 ### mvvm 和 mvc 区别？
-![mvc](../assets/mvc.png)
+![mvc](../assets/MVC.png)
 mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc 中 Controller 演变成 mvvm 中的 viewModel。mvvm 主要解决了 mvc 中大量的 DOM 操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View 。
 
 ### vue 的优点是什么？
