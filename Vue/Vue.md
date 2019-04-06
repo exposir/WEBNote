@@ -1,7 +1,7 @@
 ### v-bind和v-model的区别
 
-- v-bind用来绑定数据和属性以及表达式，缩写为'：'
-- v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。
+    v-bind用来绑定数据和属性以及表达式，缩写为'：'
+    v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。
 
 v-bind
 
@@ -42,7 +42,7 @@ v-model  多在表单中使用，在表单元素上创建双向绑定，根据�
 ```
 
 ### 什么是 mvvm？
-
+![mvvm](../assets/mvvm.png)
 MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。
 
 在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。
@@ -50,7 +50,7 @@ MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层
 ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作 DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。
 
 ### mvvm 和 mvc 区别？
-
+![mvc](../assets/mvc.png)
 mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc 中 Controller 演变成 mvvm 中的 viewModel。mvvm 主要解决了 mvc 中大量的 DOM 操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View 。
 
 ### vue 的优点是什么？
@@ -61,13 +61,13 @@ mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc
 - 可测试。界面素来是比较难于测试的，而现在测试可以针对 ViewModel 来写。
 
 ### 请详细说下你对 vue 生命周期的理解？
-
-答：总共分为 8 个阶段创建前/后，载入前/后，更新前/后，销毁前/后。
+    总共分为 8 个阶段创建前/后，载入前/后，更新前/后，销毁前/后。
 
 - 创建前/后： 在 beforeCreate 阶段，vue 实例的挂载元素 el 还没有。
 - 载入前/后：在 beforeMount 阶段，vue 实例的$el 和 data 都初始化了，但还是挂载之前为虚拟的 dom 节点，data.message 还未替换。在 mounted 阶段，vue 实例挂载完成，data.message 成功渲染。
 - 更新前/后：当 data 变化时，会触发 beforeUpdate 和 updated 方法。
 - 销毁前/后：在执行 destroy 方法后，对 data 的改变不会再触发周期函数，说明此时 vue 实例已经解除了事件监听以及和 dom 的绑定，但是 dom 结构依然存在
+![mvc](../assets/lifecycle.png)
 
 ### 组件之间的传值？
 
