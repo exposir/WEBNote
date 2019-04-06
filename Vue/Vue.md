@@ -1,12 +1,45 @@
 ### v-bind和v-model的区别
 
 - v-bind用来绑定数据和属性以及表达式，缩写为'：'
-- v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。根据控件类型选择正确的方法更新元素，可以绑定text、radio、checkbox、selected
+- v-model使用在表单中，实现双向数据绑定的，在表单元素外使用不起作用。
 
-##### v-bind
-1.绑定文本
+v-bind
 
-直接用v-bind或者{{}}
+1.绑定文本  直接用v-bind或者{{}}
+```js
+<p v-bind="message"></p>
+<p>{{message}}</p>
+```
+2.绑定属性
+```js
+<p v-bind:src="http://...."></p>
+<p v-bind:class="http://...."></p>
+<p v-bind:style="http://...."></p>
+```
+3.绑定表达式
+```js
+{{ number + 1 }}
+{{ ok ? 'YES' : 'NO' }}
+{{ message.split('').reverse().join('') }}
+```
+4.绑定html 这个时候必须要使用三个{}
+```js
+<div>{{{ raw_html }}}</div>
+```
+
+v-model  多在表单中使用，在表单元素上创建双向绑定，根据控件类型选择正确的方法更新元素，可以绑定text、radio、checkbox、selected
+
+1.绑定text
+```js
+<input type="text" v-model="val" />
+<p> {{val}} </p>
+```
+2. 绑定radio  radioval的值随着选择单选框的值，会变成one 或者 two
+```js
+<input type="radio" value="one" v-model="radioVal" />
+<input type="radio" value="two" v-model="radioVal" />
+<label for v-bind="radioval" />
+```
 
 ### 什么是 mvvm？
 
