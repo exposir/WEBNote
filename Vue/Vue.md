@@ -143,6 +143,10 @@ mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc
     }
 </script>
 ```
+3. 通过eventBus传值
+
+4. 通过Vuex传值
+
 
 ### active-class 是哪个组件的属性？
 
