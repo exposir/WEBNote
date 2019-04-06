@@ -73,7 +73,7 @@ mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc
 1. 父组件与子组件传值
 
 ```html
-//父组件通过标签上面定义传值
+//父组件通过标签上面定义传值 
 <template>
     <Main :obj="data"></Main>
 </template>
