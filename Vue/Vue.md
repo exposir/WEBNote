@@ -34,7 +34,7 @@ v-model  多在表单中使用，在表单元素上创建双向绑定，根据�
 <input type="text" v-model="val" />
 <p> {{val}} </p>
 ```
-2. 绑定radio  radioval的值随着选择单选框的值，会变成one 或者 two
+2.绑定radio  radioval的值随着选择单选框的值，会变成one 或者 two
 ```js
 <input type="radio" value="one" v-model="radioVal" />
 <input type="radio" value="two" v-model="radioVal" />
