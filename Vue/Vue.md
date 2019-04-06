@@ -205,6 +205,8 @@ home.vue，点击显示就会将子路由显示在出来，子路由的出口必
 - 声明式（标签跳转） `<router-link :to="index">`
 - 编程式（ js 跳转） `router.push('index')`
 
+![mvc](../assets/router.png)
+
 ### 懒加载（按需加载路由）（常考）
 
 webpack 中提供了 require.ensure()来实现按需加载。以前引入路由是通过 import 这样的方式引入，改为 const 定义的方式进行引入。
