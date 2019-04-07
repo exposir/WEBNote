@@ -42,12 +42,15 @@
 ##### 异步http请求线程
 - 在XMLHttpRequest在连接后是通过浏览器新开一个线程请求
 - 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调再放入事件队列中。再由JavaScript引擎执行。
+
 ![process](../assets/process.jpg)
 
 
 ### Browser进程和浏览器内核（Renderer进程）的通信过程
 
+
 ![process2](../assets/process2.jpg)
+
 
 ### GUI渲染线程与JS引擎线程互斥
 
@@ -69,11 +72,13 @@
 
 - 当 DOMContentLoaded 事件触发时，仅当DOM加载完成，不包括样式表，图片。(譬如如果有async加载的脚本就不一定完成)
 - 当 onload 事件触发时，页面上所有的DOM，样式表，脚本，图片都已经加载完成了。（渲染完毕了）
+
 所以，顺序是：`DOMContentLoader -> load`
 
 ### css加载是否会阻塞dom树渲染？
 
 这里说的是头部引入css的情况
+
 首先，我们都知道：**css是由单独的下载线程异步下载的。**
 - css加载不会阻塞DOM树解析（异步加载时DOM照常构建）
 - 但会阻塞render树渲染（渲染时需等css加载完毕，因为render树需要css信息）
