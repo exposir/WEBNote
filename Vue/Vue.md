@@ -150,9 +150,35 @@ mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc
 4. 通过Vuex传值
 
 
-### active-class 是哪个组件的属性？
+### active-class 是哪个组件的属性？如何使用？
 
-vue-router 模块的 router-link 组件。
+    active-class是vue-router模块的router-link组件中的属性，用来做选中样式的切换
+
+在vue-router中要使用active-class有两种方法：
+
+- 第一种
+在router-link中写入active-class，active-class选择样式时根据路由中的路径（to=“/home”）去匹配，然后显示。
+```js
+<router-link to="/home" class="menu-home" active-class="active">首页</router-link>
+```
+- 第二种
+直接在路由js文件中配置linkActiveClass
+```js
+export default new Router({
+  linkActiveClass: 'active',
+})
+
+<div class="menu-btn">
+  <router-link to="/" class="menu-home" active-class="active">
+    首页
+  </router-link>
+</div>
+<div class="menu-btn">
+  <router-link to="/my" class="menu-my" active-class="active">
+    我的
+  </router-link>
+</div>
+```
 
 ### 嵌套路由怎么定义？
 
@@ -225,24 +251,6 @@ import  home   from '../../common/home.vue'
 const  home = r => require.ensure( [], () => r (require('../../common/home.vue')))
 ```
 
-### vuex 是什么？怎么使用？哪种功能场景使用它？
-
-vue 框架中状态管理。在 main.js 引入 store，注入。新建了一个目录 store，….. export 。场景有：单页应用中，组件之间的状态。音乐播放、登录状态、加入购物车
-
-```js
-// 新建 store.js
-import vue from 'vue'
-import vuex form 'vuex'
-vue.use(vuex)
-export default new vuex.store({
-	//...code
-})
-
-//main.js
-import store from './store'
-...
-```
-
 ### vue-router 有哪几种导航钩子?
 
 三种
@@ -286,11 +294,34 @@ vue.js 是采用数据劫持结合发布者-订阅者模式的方式，通过 Ob
 
 第四步：MVVM 作为数据绑定的入口，整合 Observer、Compile 和 Watcher 三者，通过 Observer 来监听自己的 model 数据变化，通过 Compile 来解析编译模板指令，最终利用 Watcher 搭起 Observer 和 Compile 之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据 model 变更的双向绑定效果。
 
-## vuex 相关
+据资料，vue3.0将会使用proxy代替object.defineproperty
 
+## vuex 相关
+### vuex 是什么？怎么使用？哪种功能场景使用它？
+
+vue 框架中状态管理。在 main.js 引入 store，注入。新建了一个目录 store，….. export 。场景有：单页应用中，组件之间的状态。音乐播放、登录状态、加入购物车
+
+```js
+// 新建 store.js
+import vue from 'vue'
+import vuex form 'vuex'
+vue.use(vuex)
+export default new vuex.store({
+	//...code
+})
+
+//main.js
+import store from './store'
+...
+```
 ### vuex 有哪几种属性
 
 有 5 种，分别是 state、getter、mutation、action、module
+>state => 基本数据 
+getters => 从基本数据派生的数据 
+mutations => 提交更改数据的方法，同步！ 
+actions => 像一个装饰器，包裹mutations，使之可以异步。 
+modules => 模块化Vuex
 
 ### vuex 的 store 特性是什么
 
@@ -298,16 +329,137 @@ vue.js 是采用数据劫持结合发布者-订阅者模式的方式，通过 Ob
 - state 里面存放的数据是响应式的，vue 组件从 store 读取数据，若是 store 中的数据发生改变，依赖这相数据的组件也会发生更新
 - 它通过 mapState 把全局的 state 和 getters 映射到当前组件的 computed 计算属性
 
+### vuex 的 state 特性是什么
+- Vuex使用单一状态树，即用一个对象就包含了全部的状态数据。state作为构造器选项，定义了所有我们需要的基本状态参数。
+- 我们可以通过Vue的Computed获得Vuex的state，如下：
+```js
+const store = new Vuex.Store({
+    state: {
+        count:0
+    }
+})
+const app = new Vue({
+    //..
+    store,
+    computed: {
+        count: function(){
+            return this.$store.state.count
+        }
+    },
+    //..
+})
+```
+每当 store.state.count 变化的时候, 都会重新求取计算属性，并且触发更新相关联的 DOM。
 ### vuex 的 getter 特性是什么
 
 - getter 可以对 state 进行计算操作，它就是 store 的计算属性
 - 虽然在组件内也可以做计算属性，但是 getters 可以在多给件之间复用
 - 如果一个状态只在一个组件内使用，是可以不用 getters
+```js
+const store = new Vuex.Store({
+    state: {
+        count:0
+    }，
+    getters: {
+        // 单个参数
+        countDouble: function(state){
+            return state.count * 2
+        },
+        // 两个参数
+        countDoubleAndDouble: function(state, getters) {
+            return getters.countDouble * 2
+        }
+    }
+})
+```
 
-### vuex 的 mutation 特性是什么
+### vuex 的 mutations 特性是什么
 
-- action 类似于 muation, 不同在于：action 提交的是 mutation,而不是直接变更状态
-- action 可以包含任意异步操作
+- 提交mutation是更改Vuex中的store中的状态的唯一方法。
+- mutation必须是同步的，如果要异步需要使用action。
+```js
+const store = new Vuex.Store({
+  state: {
+    count: 1
+  },
+  mutations: {
+    //无提交荷载
+    increment(state) {
+        state.count++
+    }
+    //提交荷载
+    incrementN(state, obj) {
+      state.count += obj.n
+    }
+  }
+})
+```
+### vuex 的 actoion 特性是什么
+
+action 类似于 muation, 不同在于：
+- action 提交的是 mutation,而不是直接变更状态。
+- action 可以包含任意异步操作。
+```js
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  },
+  actions: {
+    increment (context) {
+      setInterval(function(){
+        context.commit('increment')
+      }, 1000)
+    }
+  }
+})
+```
+Action 通过 store.dispatch 方法触发：
+```js
+store.dispatch('increment')
+```
+##### 其他与mutations类似的地方
+Actions 支持同样的载荷方式和对象方式进行分发：
+```js
+// 以载荷形式分发
+store.dispatch('incrementN', {
+  n: 10
+})
+
+// 以对象形式分发
+store.dispatch({
+  type: 'incrementN',
+  n: 10
+})
+```
+### vuex 的 Modules 特性是什么
+- 使用单一状态树，导致应用的所有状态集中到一个很大的对象。但是，当应用变得很大时，store 对象会变得臃肿不堪。
+- 为了解决以上问题，Vuex 允许我们将 store 分割到模块（module）。每个模块拥有自己的 state、mutation、action、getters、甚至是嵌套子模块——从上至下进行类似的分割：
+```js
+const moduleA = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... },
+  getters: { ... }
+}
+
+const moduleB = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
+  }
+})
+```
 
 ### vue 中 ajax 请求代码应该写在组件的 methods 中还是 vuex 的 action 中
 
