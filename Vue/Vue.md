@@ -42,6 +42,7 @@ v-model  多在表单中使用，在表单元素上创建双向绑定，根据�
 
 ### 什么是 mvvm？
 ![mvvm](../assets/mvvm.png)
+
 MVVM 是 Model-View-ViewModel 的缩写。mvvm 是一种设计思想。Model 层代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑；View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来，ViewModel 是一个同步 View 和 Model 的对象。
 
 在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。
@@ -50,6 +51,7 @@ ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而
 
 ### mvvm 和 mvc 区别？
 ![mvc](../assets/MVC.png)
+
 mvc 和 mvvm 其实区别并不大。都是一种设计思想。主要就是 mvc 中 Controller 演变成 mvvm 中的 viewModel。mvvm 主要解决了 mvc 中大量的 DOM 操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View 。
 
 ### vue 的优点是什么？
