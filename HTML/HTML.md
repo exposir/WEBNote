@@ -5,11 +5,11 @@
 DOCTYPE是用来声明文档类型和DTD规范的。
 `<!DOCTYPE html>`声明位于HTML文档中的第一行，不是一个HTML标签，处于 html 标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
 
-标准模式的排版 和 JS 运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。
+>document.compatMode:
+backCompat:**怪异模式**，浏览器使用自己的怪异模式解析渲染页面。
+css1Compat:**标准模式**，浏览器使用W3C的标准解析渲染页面。
 
-在HTML4.01中<!doctype>声明指向一个DTD，由于HTML4.01基于SGML，所以DTD指定了标记规则以保证浏览器正确渲染内容
-HTML5不基于SGML，所以不用指定DTD
-
+如果没有`<!DOCTYPE html>`,那么默认的compatMode是backCompat
 
 
 ### HTML 全局属性
@@ -19,13 +19,13 @@ HTML5不基于SGML，所以不用指定DTD
 
 
 ### canvas和svg的区别
-canvas是html5提供的新元素<canvas>，而svg存在的历史要比canvas久远，已经有十几年了。svg并不是html5专有的标签，最初svg是用xml技术（超文本扩展语言，可以自定义标签或属性）描述二维图形的语言。在H5中看似canvas与svg很像，但是，他们有巨大的差别。
+canvas是html5提供的新元素`<canvas>`，而svg存在的历史要比canvas久远，已经有十几年了。svg并不是html5专有的标签，最初svg是用xml技术（超文本扩展语言，可以自定义标签或属性）描述二维图形的语言。在H5中看似canvas与svg很像，但是，他们有巨大的差别。
 
 首先，从它们的功能上来讲，canvas可以看做是一个画布。，其绘制出来的图形为**标量图**，因此，可以在canvas中引入jpg或png这类格式的图片，在实际开发中，大型的网络**游戏**都是用canvas画布做出来的，并且canvas的技术现在已经相当的成熟。另外，我们喜欢用canvas来做一些统计用的图表，如柱状图曲线图或饼状图等。
 而svg，所绘制的图形为**矢量图**，所以其用法上受到了限制。因为只能绘制矢量图，所以svg中不能引入普通的图片，因为矢量图的不会失真的效果，在项目中我们会用来**做小图标**。但是由于其本质为矢量图，可以被无限放大而不会失真，这很适合被用来做地图，而百度地图就是用svg技术做出来的。
 
 另外从技术发面来讲canvas里面绘制的图形不能被引擎抓取，如我们要让canvas里面的一个图片跟随鼠标事件: canvas.onmouseover=function(){}。
-而svg里面的图形可以被引擎抓取，支持事件的绑定。另外canvas中我们绘制图形通常是通过javascript来实现，svg更多的是通过标签来来实现，如在svg中绘制正矩形形就要用<rect>，这里我们不能用属性style="width:XXX;height:XXX;"来定义。
+而svg里面的图形可以被引擎抓取，支持事件的绑定。另外canvas中我们绘制图形通常是通过javascript来实现，svg更多的是通过标签来来实现，如在svg中绘制正矩形形就要用`<rect>`，这里我们不能用属性`style="width:XXX;height:XXX;"`来定义。
 
 
 
@@ -33,8 +33,8 @@ canvas是html5提供的新元素<canvas>，而svg存在的历史要比canvas久�
 
 定义：CSS 规范规定，每个元素都有 display 属性，确定该元素的类型，每个元素都有默认的 display 值，如 div 的 display 默认值为“block”，则为“块级”元素；span 默认 display 属性值为“inline”，是“行内”元素。
 
-- 行内元素有：a b span img input select strong（强调的语气）
-- 块级元素有：div ul ol li dl dt dd h1 h2 h3 h4…p
+- 行内元素有：a b span img input select strong
+- 块级元素有：div ul ol li dl dt dd h1 h2 h3 h4 p
 - 空元素：
   - 常见: br hr img input link meta
   - 不常见: area base col command embed keygen param source track wbr
