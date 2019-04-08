@@ -5,9 +5,9 @@
 DOCTYPE是用来声明文档类型和DTD规范的。
 `<!DOCTYPE html>`声明位于HTML文档中的第一行，不是一个HTML标签，处于 html 标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
 
->document.compatMode:
-backCompat:**怪异模式**，浏览器使用自己的怪异模式解析渲染页面。
-css1Compat:**标准模式**，浏览器使用W3C的标准解析渲染页面。
+document.compatMode:
+- backCompat:**怪异模式**，浏览器使用自己的怪异模式解析渲染页面。
+- css1Compat:**标准模式**，浏览器使用W3C的标准解析渲染页面。
 
 如果没有`<!DOCTYPE html>`,那么默认的compatMode是backCompat
 
@@ -79,7 +79,6 @@ JS 引擎则：解析和执行 javascript 来实现逻辑和控制 DOM 进行交
    - 设备能力（地图定位，手机摇一摇）
 
 
-
 ### em 与 i 的区别
  - 效果都是斜体
  - em 是语义化标签，表强调
@@ -138,6 +137,16 @@ JS 引擎则：解析和执行 javascript 来实现逻辑和控制 DOM 进行交
  - 搜索引擎的爬虫也依赖于 HTML 标记来确定上下文和各个关键字的权重，利于 SEO;
  - 使阅读源代码的人对网站更容易将网站分块，便于阅读维护理解。
 
+### 语义化与SEO
+1：`<time>` 可以更容易被搜索引引擎理解。抽取出最精确的时间信息。
+2：`<rel=nofollow>` 表示链接不表示网页之间的投票关系，不会传递权重，防止刷外链行为
+3：`<rel=tag>` 用于文章分类，适合标签聚合类网站，方便搜索引擎对页面的关键字识别。
+4：`<address>` 标签定义文档或文章的作者/拥有者的联系信息
+5：`<nav>`标签定义导航链接的部分。
+6：`<article>`标签规定独立的自包含内容。
+一篇文章应有其自身的意义，应该有可能独立于站点的其余部分对其进行分发
+`<article>` 元素的应用场景：论坛帖子  报纸文章 博客条目 用户评论
+7 `<aside>` 标签定义其所处内容之外的内容。aside 的内容应该与附近的内容相关，例如：侧边栏；
 
 ### 请描述一下 cookies，sessionStorage 和 localStorage 的区别？
 
@@ -155,13 +164,8 @@ JS 引擎则：解析和执行 javascript 来实现逻辑和控制 DOM 进行交
    - sessionStorage不能共享，localStorage在同源文档之间共享，cookie在同源且符合path规则的文档之间共享
 
 
-
 ### html 中 title 属性和 alt 属性的区别？
 
-```html
-<img src="#" alt="alt信息" />
-```
-当图片不输出信息的时候，会显示 alt 信息 鼠标放上去没有信息，当图片正常读取，不会出现 alt 信息。
 ```html
 <img src="#" alt="alt信息" title="title信息" />
 ```
@@ -192,18 +196,18 @@ head子元素大概分为三类，分别是：
 
 #### 网页基本信息
 一个网页，首先得有个标题，就跟人有名字一样。除此之外，还可以根据实际需要补充一些基本信息。
- - 文档标题（浏览器标签中显示的文本）：<title>深入了解 head 元素</title>
- - 编码格式：<meta charset="utf-8"> 如果你的页面出现乱码，那一般就是编码格式不对
- - 视窗设置：<meta name="viewport" content="width=device-width, initial-scale=1.0">
- - 搜索引擎优化相关内容： <meta name="description" content=“帮助你深层次了解HTML文档结构”>
- - IE浏览器版本渲染设置：<meta http-equiv="X-UA-Compatible" content="ie=edge">
+ - 文档标题（浏览器标签中显示的文本）：`<title>深入了解 head 元素</title>`
+ - 编码格式：`<meta charset="utf-8">` 如果你的页面出现乱码，那一般就是编码格式不对
+ - 视窗设置：`<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+ - 搜索引擎优化相关内容： `<meta name="description" content=“帮助你深层次了解HTML文档结构”>`
+ - IE浏览器版本渲染设置：`<meta http-equiv="X-UA-Compatible" content="ie=edge">`
 
 #### 其他文件链接
 
- - CSS 文件：<link rel="stylesheet" type="text/css" href="style.css">
- - JavaScript 文件：<script src=“script.js"></script>
+ - CSS 文件：`<link rel="stylesheet" type="text/css" href="style.css">`
+ - JavaScript 文件：`<script src=“script.js"></script>`
 
-但是为了让页面的样子更早的让用户看到，一般把JS文件放到body的底部
+但是为了让页面的样子更早的让用户看到，一般把JS文件放到body的**底部**
 
 #### 厂商定制
 
@@ -225,10 +229,10 @@ head子元素大概分为三类，分别是：
 ```
 
 #### CSS样式统一问题
-我们需要重置页面样式，因为在不同的手机浏览器上，默认的css样式不是统一的。 解决方法：使用reset.css重置所有元素的默认样式
+我们需要重置页面样式，因为在不同的手机浏览器上，默认的css样式不是统一的。 解决方法：使用**reset.css**重置所有元素的默认样式
 
 #### 一像素边框问题
-有的手机分辨率比较高，是2倍屏或3倍屏，手机上的浏览器就会把CSS中的1像素值展示为2个或3个物理宽度 解决方法： 添加一个border.css库，将利用**scroll缩放的原理**将边框重置。当我们需要使用一像素边框时只需要在标签上添加对应类名，如设置底部一像素边框就在标签上加入"border-bottom"的class名
+有的手机分辨率比较高，是2倍屏或3倍屏，手机上的浏览器就会把CSS中的1像素值展示为2个或3个物理宽度 解决方法： 添加一个**border.css**库，将利用**scroll缩放的原理**将边框重置。当我们需要使用一像素边框时只需要在标签上添加对应类名，如设置底部一像素边框就在标签上加入"border-bottom"的class名
 
-#### 300毫秒点击延迟问题
-在移动端开发中，某些机型上使用click事件会延迟300ms才执行，这样影响了用户体验。 解决方法： 引入[fastclick.js](https://www.jianshu.com/p/05b142d84780)。
+#### 300毫秒点击延迟问题和点击穿透问题
+在移动端开发中，某些机型上使用click事件会延迟300ms才执行，这样影响了用户体验。 解决方法： 引入[fastclick.js](https://segmentfault.com/a/1190000015154809?utm_source=tag-newest)。
