@@ -280,7 +280,7 @@ v-if(判断是否隐藏)、v-for(把数据遍历出来)、v-bind(绑定属性)�
 
 ### vue 的双向绑定的原理是什么(常考)
 
->主要采用：**数据劫持**结合“**发布-订阅**”模式的方式，通过Object.defineProperty（）的 set 和 get，在数据变动时发布消息给订阅者触发监听。
+>主要采用：**数据劫持**结合“**发布-订阅**”模式的方式，通过Object.defineProperty（）的 set 和 get，在数据变动时发布消息给订阅者触发监听。Vue不能检测到对象属性的添加或删除，解决办法是手动调用Vue.set或this.$set
 
 一段典型的体现了Vue特点的代码：
 
@@ -334,9 +334,10 @@ Watcher订阅者作为Observer和Compile之间通信的桥梁，主要做的事�
 
 Compile主要做的事情是解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图。
 
-据资料，vue3.0将会使用proxy代替object.defineproperty
+    据资料，vue3.0将会使用proxy代替object.defineproperty
 
 ## vuex 相关
+
 ### vuex 是什么？怎么使用？哪种功能场景使用它？
 
 vue 框架中状态管理。在 main.js 引入 store，注入。新建了一个目录 store，….. export 。场景有：单页应用中，组件之间的状态。音乐播放、登录状态、加入购物车
