@@ -46,39 +46,141 @@
 ![process](../assets/process.jpg)
 
 
-### Browser进程和浏览器内核（Renderer进程）的通信过程
+####  Browser进程和浏览器内核（Renderer进程）的通信过程
 
 
 ![process2](../assets/process2.jpg)
 
 
-### GUI渲染线程与JS引擎线程互斥
+####  GUI渲染线程与JS引擎线程互斥
 
 由于JavaScript是可操纵DOM的，如果在修改这些元素属性同时渲染界面（即JS线程和UI线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。因此为了防止渲染出现不可预期的结果，浏览器设置GUI渲染线程与JS引擎为互斥的关系，当JS引擎执行时GUI线程会被挂起，GUI更新则会被保存在一个队列中等到JS引擎线程空闲时立即被执行。
 
-### JS阻塞页面加载
+####  JS阻塞页面加载
 
 从上述的互斥关系，可以推导出，JS如果执行时间过长就会阻塞页面。譬如，假设JS引擎正在进行巨量的计算，此时就算GUI有更新，也会被保存到队列中，等待JS引擎空闲后执行。然后，由于巨量计算，所以JS引擎很可能很久很久后才能空闲，自然会感觉到巨卡无比。所以，要尽量避免JS执行时间过长，这样就会造成页面的渲染不连贯，导致页面渲染加载阻塞的感觉。
 
-### 简单梳理下浏览器渲染流程
+####  简单梳理下浏览器渲染流程
 
 1.解析html建立dom树
+
 2.解析css构建render树（将CSS代码解析成树形的数据结构，然后结合DOM合并成render树）
+
 3.布局render树（Layout/reflow），负责各元素尺寸、位置的计算
+
 4.绘制render树（paint），绘制页面像素信息
+
 5.浏览器会将各层的信息发送给GPU，GPU会将各层合成（composite），显示在屏幕上。
 
-### load事件与DOMContentLoaded事件的先后
+####  load事件与DOMContentLoaded事件的先后
 
 - 当 DOMContentLoaded 事件触发时，仅当DOM加载完成，不包括样式表，图片。(譬如如果有async加载的脚本就不一定完成)
 - 当 onload 事件触发时，页面上所有的DOM，样式表，脚本，图片都已经加载完成了。（渲染完毕了）
 
 所以，顺序是：`DOMContentLoader -> load`
 
-### css加载是否会阻塞dom树渲染？
+####  css加载是否会阻塞dom树渲染？
 
 这里说的是头部引入css的情况
 
 首先，我们都知道：**css是由单独的下载线程异步下载的。**
 - css加载不会阻塞DOM树解析（异步加载时DOM照常构建）
 - 但会阻塞render树渲染（渲染时需等css加载完毕，因为render树需要css信息）
+
+### Event Loop
+#### 从Event loop 谈JS的运行机制
+- JS分为同步任务和异步任务
+- 同步任务都在主线程上执行，形成一个`执行栈`
+- 主线程之外，事件触发线程管理着一个`任务队列`，只要异步任务有了运行结果，就在`任务队列`之中放置一个事件。
+- 一旦执行栈中的所有同步任务执行完毕（此时JS引擎空闲），系统就会读取任务队列，将可运行的异步任务添加到可执行栈中，开始执行。
+![process2](../assets/eventloop.jpg)
+
+>为什么有时候setTimeout推入的事件不能准时执行？
+因为可能在它推入到事件列表时，主线程还不空闲，正在执行其它代码，
+
+#### 补充
+
+![process2](../assets/eventloop2.jpg)
+
+- 主线程运行时会产生执行栈，栈中的代码调用某些api时，它们会在事件队列中添加各种事件（当满足触发条件后，如ajax请求完毕）
+- 而栈中的代码执行完毕，就会读取事件队列中的事件，去执行那些回调，如此循环。
+- 注意，总是要等待栈中的代码执行完毕后才会去读取事件队列中的事件
+
+#### 定时器
+
+什么时候会用到定时器线程？当使用`setTimeout`或`setInterval`时，它需要定时器线程计时，计时完成后就会将特定的事件推入事件队列中。
+
+```js
+setTimeout(function(){
+    console.log('hello!');
+}, 0);
+
+console.log('begin');
+```
+- 执行结果：`bigin hello`
+- W3C在HTML标准中规定，要求setTimeout中低于4ms的时间间隔就算为4ms。
+- 假设0ms就推入时间队列，也会先执行`bigin`，因为只有可执行栈内空了后才会主动读取事件队列。
+
+#### macrotask与microtask
+
+```js
+console.log('script start');
+
+setTimeout(function() {
+    console.log('setTimeout');
+}, 0);
+
+Promise.resolve().then(function() {
+    console.log('promise1');
+}).then(function() {
+    console.log('promise2');
+});
+
+console.log('script end');
+```
+
+他的执行结果是：
+
+```js
+script start
+script end
+promise1
+promise2
+setTimeout
+```
+
+Promise里面有了一个新的概念：**microtask**。JS中分为两种任务类型：**macrotask**和**microtask**,在ECMAScript中，microtack可称为**jobs**,macrotask可称为**task**。
+
+- macrotask（又称之为宏任务），可以理解是每次执行栈执行的代码就是一个宏任务（包括每次从事件队列中获取一个事件回调并放到执行栈中执行）
+- 每一个task会从头到尾将这个任务执行完毕，不会执行其它。
+- 浏览器为了能够使得JS内部task与DOM任务能够有序的执行，会在一个task执行结束后，在下一个 task 执行开始前，对页面进行重新渲染。
+
+`task->渲染->task->...`
+
+- microtask（又称为微任务），可以理解是在当前 task 执行结束后立即执行的任务。
+- 也就是说，在当前task任务后，下一个task之前，在渲染之前。
+- 所以它的响应速度相比setTimeout（setTimeout是task）会更快，因为无需等渲染。
+- 也就是说，在某一个macrotask执行完后，就会将在它执行期间产生的所有microtask都执行完毕（在渲染前）。
+
+`task->jobs->渲染->task->jobs...`
+
+什么样的场景会形成macrotask和microtask呢？
+
+- macrotask：主代码块，setTimeout，setInterval等（可以看到，事件队列中的每一个事件都是一个macrotask）
+- microtask：Promise，process.nextTick等。
+>在node环境下，process.nextTick的优先级高于Promise__，也就是可以简单理解为：在宏任务结束后会先执行微任务队列中的nextTickQueue部分，然后才会执行微任务中的Promise部分。
+
+根据线程理解：
+
+- macrotask中的事件都是放在一个事件队列中的，而这个队列由`事件触发线程`维护。
+- microtask中的所有微任务都是添加到微任务队列（Job Queues）中，等待当前macrotask执行完毕后执行，而这个队列由`JS引擎线程维护`。
+
+总结运行机制：
+>执行一个宏任务（栈中没有就从事件队列中获取）
+执行过程中如果遇到微任务，就将它添加到微任务的任务队列中
+宏任务执行完毕后，立即执行当前微任务队列中的所有微任务（依次执行）
+当前宏任务执行完毕，开始检查渲染，然后GUI线程接管渲染
+渲染完毕后，JS线程继续接管，开始下一个宏任务（从事件队列中获取）
+
+![run](../assets/run.jpg)
+
