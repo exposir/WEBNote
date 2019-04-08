@@ -1,6 +1,6 @@
 # ES6
 
-![ES6](../assets/es6.png)
+![ES6](../assets/ES6.png)
 
 ### var、let 及 const 区别？
  - 全局申明的var变量会挂载在window上，而let和const不会
