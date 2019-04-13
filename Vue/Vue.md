@@ -547,3 +547,44 @@ devtoolPlugin 中提供了此功能。因为 dev 模式下所有的 state change
 axios 是请求后台资源的模块。 npm i axios -S
 
 如果发送的是跨域请求，需在配置文件中 config/index.js 进行配置
+
+### VUE如何方式页面闪烁？
+
+使用v-cloak
+
+- 这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+
+```js
+    <div v-cloak>
+        {{ message }}
+    </div>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+```
+
+不会显示，直到编译结束。
+
+#### 为什么我用的 v-cloak 无效？
+
+在实际项目中，我们常通过 @import 来加载 css 文件
+
+```js
+@import "style.css"
+@import "index.css"
+```
+
+而 @import 是在页面 DOM 完全载入后才会进行加载，如果我们将 [v-cloak] 写在 @import 加载的 css 文件中，就会导致页面仍旧闪烁。
+
+为了避免这种情况，我们可以将 [v-cloak] 写在 link 引入的 css 中，或者写一个内联 css 样式，这样就得到了解决。
+
+如果v-cloak 的display属性被优先级别高的样式覆盖所导致，我的处理方案是添加 !important  
+
+```js
+[v-cloak] {
+  display:none !important;
+}
+```
