@@ -131,8 +131,27 @@ b.bind(a,1,2)()
     c.o()
 ```
 
+#### 第六题 伴鱼⭐
 
+```js
+        var name = "winow";
+        function func() {
+            console.log(this.name);
+            console.log(this)
+        }
+        var obj = {
+            name: "object",
+            getNameFunc: function (fn) {
+                fn && fn();
+                return function () {
+                    return this.name;
+                }
+            }
+        }
+        console.log(obj.getNameFunc(func)());
 
+        //window window
+```
 
 ### 定时器真有意思啊！
 
