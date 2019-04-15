@@ -12,7 +12,7 @@
 
 浏览器缓存主要是 HTTP 协议定义的缓存机制。HTML meta 标签，例如
 ```js
-<META HTTP-EQUIV="Pragma" CONTENT="no-store">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-store">
 ```
 含义是让浏览器不缓存当前页面。但是代理服务器不解析 HTML 内容，一般应用广泛的是用**HTTP头信息**控制缓存。
 
@@ -20,7 +20,10 @@
 
 大致分为两种：**强缓存**和**协商缓存**。强缓存如果命中缓存不需要和服务器端发生交互，而协商缓存不管是否命中都要和服务器端发生交互，强制缓存的优先级高于协商缓存。具体内容下文介绍。
 
+![http](../assets/http.png)
+
 匹配流程（已有缓存的情况下）：
+
 ![httpStore](../assets/httpStore.jpg)
 
 ### 强缓存
@@ -71,7 +74,7 @@ Last-modified: 服务器端资源的最后修改时间，响应头部会带上�
 
 由服务器端上生成的一段 hash 字符串，第一次请求时响应头带上 ETag: abcd，之后的请求中带上 If-None-Match: abcd，服务器检查 ETag，返回 304 或 200。
 
-![Last-modified](../assets/ETag.jpg)
+![Last-modified](../assets/Etag.jpg)
 
 关于 last-modified 和 Etag 区别，已经有很多人总结过了：
 

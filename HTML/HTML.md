@@ -201,6 +201,7 @@ head子元素大概分为三类，分别是：
  - 视窗设置：`<meta name="viewport" content="width=device-width, initial-scale=1.0">`
  - 搜索引擎优化相关内容： `<meta name="description" content=“帮助你深层次了解HTML文档结构”>`
  - IE浏览器版本渲染设置：`<meta http-equiv="X-UA-Compatible" content="ie=edge">`
+ - 浏览器不缓存当前页面: `<meta HTTP-EQUIV="Pragma" CONTENT="no-store">`
 
 #### 其他文件链接
 
