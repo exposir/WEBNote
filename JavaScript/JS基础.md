@@ -12,3 +12,8 @@ document.readyState 属性返回当前文档的状态:
 - loading - 载入中
 - interactive - 已加载，文档与用户可以开始交互   
 - complete - 载入完成
+
+### this
+
+![this](../assets/this_js.png)
+
