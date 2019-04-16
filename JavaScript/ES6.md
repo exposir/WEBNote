@@ -106,7 +106,42 @@ console.log(sum)
  - 在一次执行回调函数时，当前值和初始值相加得出结果 1，该结果会在第二次执行回调函数时当做第一个参数传入
  - 所以在第二次执行回调函数时，相加的值就分别是 1 和 2，以此类推，循环结束后得到结果 6。
 
+### some
 
+对数组中的每个元素都执行一次指定的函数（callback），直到此函数返回 true，如果发现这个元素，some 将返回 true，如果回调函数对每个元素执行后都返回 false ，some 将返回 false。它只对数组中的非空元素执行指定的函数，没有赋值或者已经删除的元素将被忽略。
+```js
+//检查是否有数组元素大于等于10：
+
+function isBigEnough(element, index, array) {
+    return (element >= 10);
+}
+var passed = [2, 5, 8, 1, 4].some(isBigEnough);
+// passed is false
+passed = [12, 5, 8, 1, 4].some(isBigEnough);
+// passed is true
+//结果：
+//[2, 5, 8, 1, 4].some(isBigEnough) ： false 
+//[12, 5, 8, 1, 4].some(isBigEnough) ： true 
+```
+### every
+
+对数组中的每个元素都执行一次指定的函数（callback），直到此函数返回 false，如果发现这个元素，every 将返回 false，如果回调函数对每个元素执行后都返回 true ，every 将返回 true。它只对数组中的非空元素执行指定的函数，没有赋值或者已经删除的元素将被忽略
+
+```js
+
+//测试是否所有数组元素都大于等于10：
+
+function isBigEnough(element, index, array) {
+    return (element >= 10);
+}
+var passed = [12, 5, 8, 130, 44].every(isBigEnough);
+// passed is false
+passed = [12, 54, 18, 130, 44].every(isBigEnough);
+// passed is true
+//结果：
+//[12, 5, 8, 130, 44].every(isBigEnough) 返回 ： false 
+//[12, 54, 18, 130, 44].every(isBigEnough) 返回 ： true 
+```
 
 ### Es6中箭头函数与普通函数的区别？
  - 普通function的声明在变量提升中是最高的，箭头函数没有函数提升
@@ -320,3 +355,269 @@ const inst = new myClass();
 Reflect.ownKeys(myClass.prototype)
 // [ 'constructor', 'foo', Symbol(bar) ]
 ```
+
+### Set 
+
+ `new Set([iterable]);`
+
+Set 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用。
+
+**属性:**
+
+`Set.length`
+length属性的值为0。
+`get Set[@@species]`
+构造函数用来创建派生对象.
+`Set.prototype`
+表示Set构造器的原型，允许向所有Set对象添加新的属性。
+
+**Set实例**
+
+所有Set实例继承自 Set.prototype。
+
+**属性:**
+
+`Set.prototype.constructor`
+返回实例的构造函数。默认情况下是Set。
+
+`Set.prototype.size`
+返回Set对象的值的个数。
+
+**方法:**
+
+`Set.prototype.add(value)`
+在Set对象尾部添加一个元素。返回该Set对象。
+
+`Set.prototype.clear()`
+移除Set对象内的所有元素。
+
+`Set.prototype.delete(value)`
+移除Set的中与这个值相等的元素，返回Set.prototype.has(value)在这个操作前会返回的值（即如果该元素存在，返回true，否则返回false）。Set.prototype.has(value)在此后会返回false。
+
+`Set.prototype.entries()`
+返回一个新的迭代器对象，该对象包含Set对象中的按插入顺序排列的所有元素的值的[value, value]数组。为了使这个方法和Map对象保持相似， 每个值的键和值相等。
+
+`Set.prototype.forEach(callbackFn[, thisArg])`
+按照插入顺序，为Set对象中的每一个值调用一次callBackFn。如果提供了thisArg参数，回调中的this会是这个参数。
+
+`Set.prototype.has(value)`
+返回一个布尔值，表示该值在Set中存在与否。
+
+`Set.prototype.keys()`
+与values()方法相同，返回一个新的迭代器对象，该对象包含Set对象中的按插入顺序排列的所有元素的值。
+
+`Set.prototype.values()`
+返回一个新的迭代器对象，该对象包含Set对象中的按插入顺序排列的所有元素的值。
+
+`Set.prototype[@@iterator]()`
+返回一个新的迭代器对象，该对象包含Set对象中的按插入顺序排列的所有元素的值。
+
+**示例**
+```js
+let mySet = new Set();
+
+mySet.add(1); // Set(1) {1}
+mySet.add(5); // Set(2) {1, 5}
+mySet.add(5); // Set { 1, 5 }
+mySet.add("some text"); // Set(3) {1, 5, "some text"}
+var o = {a: 1, b: 2};
+mySet.add(o);
+
+mySet.add({a: 1, b: 2}); // o 指向的是不同的对象，所以没问题
+
+mySet.has(1); // true
+mySet.has(3); // false
+mySet.has(5);              // true
+mySet.has(Math.sqrt(25));  // true
+mySet.has("Some Text".toLowerCase()); // true
+mySet.has(o); // true
+
+mySet.size; // 5
+
+mySet.delete(5);  // true,  从set中移除5
+mySet.has(5);     // false, 5已经被移除
+
+mySet.size; // 4, 刚刚移除一个值
+console.log(mySet); // Set {1, "some text", Object {a: 1, b: 2}, Object {a: 1, b: 2}}
+```
+
+### Map 
+
+`new Map([iterable])`
+
+Map 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值。
+
+Objects 和 maps 的比较:
+- 一个Object的键只能是字符串或者 Symbols，但一个 Map 的键可以是任意值，包括函数、对象、基本类型。
+- Map 中的键值是有序的，而添加到对象中的键则不是。因此，当对它进行遍历时，Map 对象是按插入的顺序返回键值。
+- 你可以通过 size 属性直接获取一个 Map 的键值对个数，而 Object 的键值对个数只能手动计算。
+- Map 可直接进行迭代，而 Object 的迭代需要先获取它的键数组，然后再进行迭代。
+- Object 都有自己的原型，原型链上的键名有可能和你自己在对象上的设置的键名产生冲突。虽然 ES5 开始可以用 map = Object.create(null) 来创建一个没有原型的对象，但是这种用法不太常见。
+- Map 在涉及频繁增删键值对的场景下会有些性能优势。
+
+**属性:**
+
+`Map.length`
+属性 length 的值为 0 。
+
+`get Map[@@species]`
+本构造函数用于创建派生对象。
+
+`Map.prototype`
+表示 Map 构造器的原型。 允许添加属性从而应用于所有的 Map 对象。
+
+**Map实例**
+
+所有的 Map 对象实例都会继承 Map.prototype。
+
+**属性:**
+
+`Map.prototype.constructor`
+返回一个函数，它创建了实例的原型。默认是Map函数。
+
+`Map.prototype.size`
+返回Map对象的键/值对的数量。
+
+**方法:**
+`Map.prototype.clear()`
+移除Map对象的所有键/值对。
+
+`Map.prototype.delete(key)`
+如果 Map 对象中存在该元素，则移除它并返回 true；否则如果该元素不存在则返回 false
+
+`Map.prototype.entries()`
+返回一个新的 Iterator 对象，它按插入顺序包含了Map对象中每个元素的 [key, value] 数组。
+
+`Map.prototype.forEach(callbackFn[, thisArg])`
+按插入顺序，为 Map对象里的每一键值对调用一次callbackFn函数。如果为forEach提供了thisArg，它将在每次回调中作为this值。
+
+`Map.prototype.get(key)`
+返回键对应的值，如果不存在，则返回undefined。
+
+`Map.prototype.has(key)`
+返回一个布尔值，表示Map实例是否包含键对应的值。
+
+`Map.prototype.keys()`
+返回一个新的 Iterator对象， 它按插入顺序包含了Map对象中每个元素的键 。
+
+`Map.prototype.set(key, value)`
+设置Map对象中键的值。返回该Map对象。
+
+`Map.prototype.values()`
+返回一个新的Iterator对象，它按插入顺序包含了Map对象中每个元素的值。
+
+`Map.prototype[@@iterator]()`
+返回一个新的Iterator对象，它按插入顺序包含了Map对象中每个元素的 [key, value] 数组。
+
+**示例**
+
+```js
+var myMap = new Map();
+ 
+var keyObj = {},
+    keyFunc = function () {},
+    keyString = "a string";
+ 
+// 添加键
+myMap.set(keyString, "和键'a string'关联的值");
+myMap.set(keyObj, "和键keyObj关联的值");
+myMap.set(keyFunc, "和键keyFunc关联的值");
+ 
+myMap.size; // 3
+ 
+// 读取值
+myMap.get(keyString);    // "和键'a string'关联的值"
+myMap.get(keyObj);       // "和键keyObj关联的值"
+myMap.get(keyFunc);      // "和键keyFunc关联的值"
+ 
+myMap.get("a string");   // "和键'a string'关联的值"
+                         // 因为keyString === 'a string'
+myMap.get({});           // undefined, 因为keyObj !== {}
+myMap.get(function() {}) // undefined, 因为keyFunc !== function () {}
+```
+
+### Symbol 
+
+Symbol() 函数会返回 symbol 类型的值，该类型具有静态属性和静态方法。它的静态属性会暴露几个内建的成员对象；它的静态方法会暴露全局的 symbol 注册，且类似于内建对象类，但作为构造函数来说它并不完整，因为它不支持语法："new Symbol()"。所以使用 Symbol 生成的值是不相等：
+
+```js
+const s1 = Symbol();
+const s2 = Symbol();
+console.log(s1 === s2); // false
+```
+
+实例化 symbol 时，有一个可选的第一个参数，你可以选择为其提供字符串。 此值旨在用于调试代码，否则它不会真正影响symbol 本身。
+
+```js
+const s1 = Symbol("debug");
+const str = "debug";
+const s2 = Symbol("xxyy");
+console.log(s1 === str); // false
+console.log(s1 === s2); // false
+console.log(s1); // Symbol(debug)
+```
+
+#### symbol 作为对象属性
+
+symbol 还有另一个重要的用途,它们可以用作对象中的键，如下：
+
+```js
+const obj = {};
+const sym = Symbol();
+obj[sym] = "foo";
+obj.bar = "bar";
+console.log(obj); // { bar: 'bar' }
+console.log(sym in obj); // true
+console.log(obj[sym]); // foo
+console.log(Object.keys(obj)); // ['bar']
+```
+
+乍一看，这看起来就像可以使用 symbol 在对象上创建私有属性，许多其他编程语言在其类中有自己的私有属性，私有属性遗漏一直被视为 JavaScript 的缺点。
+
+不幸的是，与该对象交互的代码仍然可以访问其键为 symbol 的属性。 在调用代码尚不能访问 symbol 本身的情况下，这甚至是可能的。 例如，Reflect.ownKeys() 方法能够获取对象上所有键的列表，包括字符串和 symbol ：
+
+```js
+function tryToAddPrivate(o) {
+    o[Symbol("Pseudo Private")] = 42;
+}
+const obj = { prop: "hello" };
+tryToAddPrivate(obj);
+console.log(Reflect.ownKeys(obj));
+// [ 'prop', Symbol(Pseudo Private) ]
+console.log(obj[Reflect.ownKeys(obj)[1]]); // 42
+```
+
+#### 防止属性名称冲突
+
+符号可能不会直接受益于 JavaScript 为对象提供私有属性。然而，他们是有益的另一个原因。当不同的库希望向对象添加属性而不存在名称冲突的风险时，它们非常有用。
+
+Symbol 为 JavaScrit 对象提供私有属性还有点困难，但 Symbol 还有别外一个好处，就是避免当不同的库向对象添加属性存在命名冲突的风险。
+
+考虑这样一种情况:两个不同的库想要向一个对象添加基本数据，可能它们都想在对象上设置某种标识符。通过简单地使用 id 作为键，这样存在一个巨大的风险，就是多个库将使用相同的键。
+
+```js
+function lib1tag(obj) {
+    obj.id = 42;
+}
+function lib2tag(obj) {
+    obj.id = 369;
+}
+```
+
+通过使用 Symbol，每个库可以在实例化时生成所需的 Symbol。然后用生成 Symbol 的值做为对象的属性：
+
+```js
+const library1property = Symbol("lib1");
+function lib1tag(obj) {
+    obj[library1property] = 42;
+}
+const library2property = Symbol("lib2");
+function lib2tag(obj) {
+    obj[library2property] = 369;
+}
+```
+
+出于这个原因，Symbol 似乎确实有利于 JavaScript。
+
+JavaScript 为什么要有 Symbol 类型:
+https://segmentfault.com/a/1190000018522663

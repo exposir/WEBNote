@@ -98,4 +98,80 @@ ajax轮询的原理非常简单,让浏览器每隔几秒就像服务器发送一
 WebSocket是HTML5开始提供的一种在单个TCP连接上进行全双工通讯的协议.在WebSocket API中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送,不需要繁琐的询问和等待.
 从上面的介绍很容易看出来,ajax轮询和长轮询都是非常耗费资源的,ajax轮询需要服务器有很快的处理速度和资源,http长轮询需要有很高的并发,也就是同时接待客户的能力.而WebSocket,只需要经过一次HTTP请求,就可以与服务端进行源源不断的消息收发了.
 
-\
+### 函数声明和函数表达式的区别？
+
+Javascript 中函数声明和函数表达式是存在区别的，函数声明在JS解析时进行函数提升，因此在同一个作用域内，不管函数声明在哪里定义，该函数都可以进行调用。而函数表达式的值是在JS运行时确定，并且在表达式赋值完成后，该函数才能调用。
+
+### 数组去重？
+
+1. 使用Set
+
+`[...new Set([1,2,2,3])] // [1, 2, 3]`
+
+2. filter
+
+```js
+[1,2,2,3].filter((value, index, arr) => {
+	return index === arr.indexOf(value)
+})
+```
+
+这里主要利用了indexOf只会返回元素第一次出现的索引。
+
+3. 使用obj
+
+### 部分数组对象方法
+
+ 1. `Array​.prototype​.indexOf()`
+indexOf()方法返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1。
+```js
+[1,2,2,3].indexOf(1) //0
+```
+
+2. `for (variable in object) {...}`
+遍历出实例和**原型**上可枚举的属性名。
+```js
+var obj = {a:1, b:2, c:3};
+for (var prop in obj) {
+  console.log("obj." + prop + " = " + obj[prop]);
+}
+
+// Output:
+// "obj.a = 1"
+// "obj.b = 2"
+// "obj.c = 3"
+```
+
+3. `obj.hasOwnProperty(prop)`
+hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性
+
+4. `Object.keys(obj)`
+遍历出实例上可枚举的属性名。
+
+5. `Object.getOwnPropertyNames(obj)`
+遍历出实例上所有的属性名。  
+
+6. `for (variable of iterable) {
+    //statements
+}`
+在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+
+```js
+let iterable = [10, 20, 30];
+
+for (let value of iterable) {
+    value += 1;
+    console.log(value);
+}
+// 11
+// 21
+// 31
+```
+
+### 创建一个没有原型的对象
+
+obj = Object.create(null)
+
+### 交换a和b的值
+[a,b] = [b,a]
+

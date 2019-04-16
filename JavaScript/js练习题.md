@@ -267,3 +267,34 @@ Person("Dan").sleep(10).eat("dinner");
         console.log(obj1);
 ```
 
+### 变量声明 水滴互助
+
+```js
+        var a = 10;
+        function test() {
+            var a = 20;
+            return function () {
+                a = 30
+            }
+        }
+        var fn = test();
+        fn()
+```
+
+### 函数声明 水滴互助
+
+```js
+        function test() {
+            return func();
+            var func = function () {
+                return a = 10
+            }
+            function func() {
+                return a = 20
+            }
+            var func = (function () {
+                return a = 30;
+            })
+
+        }
+```
