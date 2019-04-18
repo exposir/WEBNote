@@ -17,54 +17,6 @@ document.readyState 属性返回当前文档的状态:
 
 ![this](../assets/this_js.png)
 
-### 如何判断对象是否相等？
-
-简单方法：
-
-```js
-var a = {
-    name:10,
-    age:20
-}
-var b = {
-    name:10,
-    age:20
-}
-a = JSON.stringify(a)
-b = JSON.stringify(b)
-a === b //true
-```
-
-专业方法：
-
-```js
-        function diff(obj1, obj2) {
-            var o1 = obj1 instanceof Object;
-            var o2 = obj2 instanceof Object;
-            if (!o1 || !o2) {/*  判断不是对象  */
-                return obj1 === obj2;
-            }
-
-            if (Object.keys(obj1).length !== Object.keys(obj2).length) {
-                return false;
-                //Object.keys() 返回一个由对象的自身可枚举属性(key值)组成的数组,例如：数组返回下表：let arr = ["a", "b", "c"];console.log(Object.keys(arr))->0,1,2;
-            }
-
-            for (var attr in obj1) {
-                var t1 = obj1[attr] instanceof Object;
-                var t2 = obj2[attr] instanceof Object;
-                if (t1 && t2) {
-                    return diff(obj1[attr], obj2[attr]);
-                } else if (obj1[attr] !== obj2[attr]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        console.log(diff(a, b));
-```
-
 ### 对象（Object）和字符串（String）互转
 
 利用原生JSON对象，将对象转为字符串:
@@ -101,24 +53,6 @@ WebSocket是HTML5开始提供的一种在单个TCP连接上进行全双工通讯
 ### 函数声明和函数表达式的区别？
 
 Javascript 中函数声明和函数表达式是存在区别的，函数声明在JS解析时进行函数提升，因此在同一个作用域内，不管函数声明在哪里定义，该函数都可以进行调用。而函数表达式的值是在JS运行时确定，并且在表达式赋值完成后，该函数才能调用。
-
-### 数组去重？
-
-1. 使用Set
-
-`[...new Set([1,2,2,3])] // [1, 2, 3]`
-
-2. filter
-
-```js
-[1,2,2,3].filter((value, index, arr) => {
-	return index === arr.indexOf(value)
-})
-```
-
-这里主要利用了indexOf只会返回元素第一次出现的索引。
-
-3. 使用obj
 
 ### 部分数组对象方法
 
@@ -173,5 +107,6 @@ for (let value of iterable) {
 obj = Object.create(null)
 
 ### 交换a和b的值
+
 [a,b] = [b,a]
 
