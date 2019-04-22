@@ -73,3 +73,23 @@ flex: auto  1 1 auto
 flex: 1  1 1 0%
 
 flex: 0  0 1 0%
+
+### 移动端 border:1px
+
+```css
+:after{
+content: ''; 
+position: absolute;
+top: 0; 
+left: 0; 
+border: 1px solid #000; 
+-webkit-box-sizing: border-box;
+ box-sizing: border-box;
+ width: 200%; 
+height: 200%; 
+-webkit-transform: scale(0.5); 
+transform: scale(0.5); 
+-webkit-transform-origin: left top;
+ transform-origin: left top;
+}
+```

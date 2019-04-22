@@ -588,3 +588,7 @@ axios 是请求后台资源的模块。 npm i axios -S
   display:none !important;
 }
 ```
+
+### keep-alive 
+
+https://zhuanlan.zhihu.com/p/30979183
