@@ -11,10 +11,12 @@
 ```
 
 ​
-
+```js
 <p class="header">
     <p class="header__body">
         <button class="header__button--primary"></button>
         <button class="header__button--default"></button>
     </p>
 </p>
+
+```
